@@ -27,8 +27,8 @@
 
 <div class="flex h-screen overflow-hidden" x-data="{ sidebarOpen: true }">
     <!-- Sidebar -->
-    <aside class="w-64 flex-shrink-0 bg-white border-r-4 border-retro-text flex flex-col transition-all duration-300 overflow-hidden"
-           :class="sidebarOpen ? 'w-64' : 'w-20'">
+    <aside class="flex-shrink-0 bg-white border-retro-text flex flex-col transition-all duration-300 ease-in-out overflow-hidden"
+           :class="sidebarOpen ? 'w-64 border-r-4' : 'w-0 border-r-0'">
         <!-- Logo -->
         <div class="flex items-center gap-3 px-6 py-6 border-b-4 border-retro-text flex-shrink-0" :class="sidebarOpen ? '' : 'justify-center px-4'">
             <img src="{{ asset('img/icon/icon.png') }}" class="w-10 h-10 object-contain rounded-xl bg-retro-bg border-2 border-retro-text p-1 flex-shrink-0" alt="Mringis Logo">
@@ -98,7 +98,7 @@
     </aside>
 
     <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto bg-retro-bg flex flex-col">
+    <main class="flex-1 overflow-y-auto bg-retro-bg flex flex-col transition-all duration-300 ease-in-out">
         <!-- Top Bar -->
         <header class="bg-white border-b-4 border-retro-text px-8 py-4 flex items-center justify-between sticky top-0 z-10 text-retro-text flex-shrink-0">
             <div class="flex items-center gap-4">
