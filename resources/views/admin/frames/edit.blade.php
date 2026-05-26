@@ -9,7 +9,7 @@
     $existingCoords = $frame->layout_coordinates ? json_encode($frame->layout_coordinates) : 'null';
 @endphp
 
-<div class="max-w-5xl" x-data="frameEditor({{ $existingCoords }})" x-init="init()">
+<div class="max-w-5xl text-retro-text" x-data="frameEditor({{ $existingCoords }})" x-init="init()">
     <form action="{{ route('admin.frames.update', $frame) }}" method="POST" enctype="multipart/form-data" id="frame-form">
         @csrf
         @method('PUT')
@@ -18,32 +18,32 @@
 
             {{-- ─── Kolom Kiri: Informasi Frame ─────────────────── --}}
             <div class="space-y-5">
-                <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 space-y-5">
-                    <h3 class="text-base font-bold text-white border-b border-gray-800 pb-3">Informasi Frame</h3>
+                <div class="bg-white border-4 border-retro-text rounded-2xl p-6 space-y-5 shadow-[4px_4px_0px_#202020]">
+                    <h3 class="text-base font-black border-b-4 border-retro-text pb-3 uppercase tracking-wider">Informasi Frame</h3>
 
                     {{-- Name --}}
                     <div>
-                        <label class="block text-sm font-medium text-gray-300 mb-2">Nama Frame <span class="text-red-400">*</span></label>
+                        <label class="block text-sm font-bold mb-2">Nama Frame <span class="text-retro-primary font-black">*</span></label>
                         <input type="text" name="name" value="{{ old('name', $frame->name) }}"
-                               class="w-full bg-gray-800 border {{ $errors->has('name') ? 'border-red-500/60' : 'border-gray-700' }} rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all"
+                               class="w-full bg-white border-2 border-retro-text rounded-xl px-4 py-3 text-retro-text placeholder-retro-text/40 font-bold focus:outline-none focus:ring-2 focus:ring-retro-primary transition-all"
                                required>
-                        @error('name')<p class="text-red-400 text-xs mt-1.5">{{ $message }}</p>@enderror
+                        @error('name')<p class="text-retro-primary text-xs font-bold mt-1.5">{{ $message }}</p>@enderror
                     </div>
 
                     {{-- Description --}}
                     <div>
-                        <label class="block text-sm font-medium text-gray-300 mb-2">Deskripsi</label>
+                        <label class="block text-sm font-bold mb-2">Deskripsi</label>
                         <textarea name="description" rows="2"
-                                  class="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all resize-none">{{ old('description', $frame->description) }}</textarea>
+                                  class="w-full bg-white border-2 border-retro-text rounded-xl px-4 py-3 text-retro-text placeholder-retro-text/40 font-bold focus:outline-none focus:ring-2 focus:ring-retro-primary transition-all resize-none">{{ old('description', $frame->description) }}</textarea>
                     </div>
 
                     {{-- Price --}}
                     <div>
-                        <label class="block text-sm font-medium text-gray-300 mb-2">Harga (Rp) <span class="text-red-400">*</span></label>
-                        <div class="flex items-center gap-2 bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-purple-500/50 transition-all">
-                            <span class="text-gray-400 text-sm font-medium">Rp</span>
+                        <label class="block text-sm font-bold mb-2">Harga (Rp) <span class="text-retro-primary font-black">*</span></label>
+                        <div class="flex items-center gap-2 bg-white border-2 border-retro-text rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-retro-primary transition-all">
+                            <span class="text-retro-text/60 text-sm font-black">Rp</span>
                             <input type="number" name="price" value="{{ old('price', $frame->price) }}" min="0" step="1000"
-                                   class="flex-1 bg-transparent text-white font-medium focus:outline-none" required>
+                                   class="flex-1 bg-transparent text-retro-text font-black focus:outline-none" required>
                         </div>
                     </div>
 
@@ -55,29 +55,29 @@
                             <input type="hidden" name="is_active" value="0">
                             <input type="checkbox" name="is_active" value="1" id="is_active"
                                    {{ old('is_active', $frame->is_active) ? 'checked' : '' }} class="sr-only peer">
-                            <div class="w-11 h-6 bg-gray-700 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                            <div class="w-11 h-6 bg-gray-300 border-2 border-retro-text rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-retro-text after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-retro-secondary"></div>
                         </label>
-                        <label for="is_active" class="text-sm font-medium text-gray-300 cursor-pointer">Frame Aktif</label>
+                        <label for="is_active" class="text-sm font-bold cursor-pointer select-none">Frame Aktif</label>
                     </div>
                 </div>
 
                 {{-- Upload Frame PNG --}}
-                <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6">
-                    <h3 class="text-base font-bold text-white mb-4 border-b border-gray-800 pb-3">Gambar Frame PNG</h3>
+                <div class="bg-white border-4 border-retro-text rounded-2xl p-6 shadow-[4px_4px_0px_#202020]">
+                    <h3 class="text-base font-black mb-4 border-b-4 border-retro-text pb-3 uppercase tracking-wider">Gambar Frame PNG</h3>
 
                     @if($frame->overlay_image)
-                    <div class="flex items-center gap-3 bg-gray-800 rounded-xl p-3 mb-4">
-                        <div class="checkerboard rounded-lg overflow-hidden w-16 h-16 flex-shrink-0">
+                    <div class="flex items-center gap-3 bg-retro-bg border-2 border-retro-text rounded-xl p-3 mb-4 shadow-[2px_2px_0px_#202020]">
+                        <div class="checkerboard rounded-lg overflow-hidden w-16 h-16 flex-shrink-0 border border-retro-text">
                             <img src="{{ Storage::url($frame->overlay_image) }}" class="w-full h-full object-contain">
                         </div>
                         <div>
-                            <p class="text-sm text-gray-300 font-medium">Frame Saat Ini</p>
-                            <p class="text-xs text-gray-500">Upload baru untuk mengganti</p>
+                            <p class="text-sm font-black">Frame Saat Ini</p>
+                            <p class="text-xs text-retro-text/60 font-semibold">Upload baru untuk mengganti</p>
                         </div>
                     </div>
                     @endif
 
-                    <div class="border-2 border-dashed border-gray-700 rounded-xl p-5 text-center hover:border-purple-500/40 transition-colors cursor-pointer"
+                    <div class="border-4 border-dashed border-retro-text bg-retro-bg/40 rounded-xl p-5 text-center hover:bg-retro-primary/5 transition-colors cursor-pointer"
                          @click="$refs.fileInput.click()"
                          @dragover.prevent
                          @drop.prevent="handleFileDrop($event)">
@@ -85,13 +85,13 @@
                                @change="onFileChange($event)">
 
                         <div x-show="!previewUrl">
-                            <svg class="w-8 h-8 text-gray-600 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-8 h-8 text-retro-text mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
                             </svg>
-                            <p class="text-gray-400 text-sm">Klik untuk upload PNG baru</p>
+                            <p class="text-sm font-black">Klik untuk upload PNG baru</p>
                         </div>
                         <div x-show="previewUrl">
-                            <div class="checkerboard rounded-lg overflow-hidden inline-block">
+                            <div class="checkerboard rounded-lg overflow-hidden inline-block p-1 border border-retro-text">
                                 <img :src="previewUrl" class="max-h-24 object-contain">
                             </div>
                         </div>
@@ -99,16 +99,16 @@
 
                     <div class="grid grid-cols-2 gap-3 mt-4">
                         <div>
-                            <label class="text-xs text-gray-500 block mb-1.5">Lebar Ref. Canvas (px)</label>
+                            <label class="text-xs font-bold block mb-1.5">Lebar Ref. Canvas (px)</label>
                             <input type="number" x-model.number="refW" min="100" max="2000" step="10"
                                    @change="resizeCanvas()"
-                                   class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-purple-500/50">
+                                   class="w-full bg-white border-2 border-retro-text rounded-lg px-3 py-2 text-retro-text font-bold text-sm focus:outline-none focus:ring-1 focus:ring-retro-primary">
                         </div>
                         <div>
-                            <label class="text-xs text-gray-500 block mb-1.5">Tinggi Ref. Canvas (px)</label>
+                            <label class="text-xs font-bold block mb-1.5">Tinggi Ref. Canvas (px)</label>
                             <input type="number" x-model.number="refH" min="100" max="2000" step="10"
                                    @change="resizeCanvas()"
-                                   class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-purple-500/50">
+                                   class="w-full bg-white border-2 border-retro-text rounded-lg px-3 py-2 text-retro-text font-bold text-sm focus:outline-none focus:ring-1 focus:ring-retro-primary">
                         </div>
                     </div>
                 </div>
@@ -116,26 +116,26 @@
                 {{-- Actions --}}
                 <div class="flex items-center gap-4">
                     <button type="submit"
-                            class="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold px-6 py-3 rounded-xl transition-all shadow-lg shadow-purple-500/20 hover:-translate-y-0.5">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            class="flex items-center gap-2 bg-retro-primary border-4 border-retro-text text-white font-black px-6 py-3.5 rounded-xl transition-all shadow-[4px_4px_0px_#202020] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_#202020] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none cursor-pointer">
+                        <svg class="w-5 h-5 stroke-[3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
                         </svg>
                         Update Frame
                     </button>
-                    <a href="{{ route('admin.frames.index') }}" class="text-gray-400 hover:text-white text-sm font-medium transition-colors">Batal</a>
+                    <a href="{{ route('admin.frames.index') }}" class="text-retro-text hover:text-retro-primary font-black text-sm transition-colors">Batal</a>
                 </div>
             </div>
 
             {{-- ─── Kolom Kanan: Coordinate Editor ─────────────── --}}
             <div class="space-y-4">
-                <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6">
-                    <div class="flex items-start justify-between mb-4 border-b border-gray-800 pb-3">
+                <div class="bg-white border-4 border-retro-text rounded-2xl p-6 shadow-[4px_4px_0px_#202020]">
+                    <div class="flex items-center justify-between mb-4 border-b-4 border-retro-text pb-3">
                         <div>
-                            <h3 class="text-base font-bold text-white">Editor Koordinat Slot</h3>
-                            <p class="text-xs text-gray-500 mt-1">Gambar area foto dengan klik & drag</p>
+                            <h3 class="text-base font-black">Editor Koordinat Slot</h3>
+                            <p class="text-xs text-retro-text/60 font-semibold mt-1">Gambar area foto dengan klik & drag pada canvas</p>
                         </div>
                         <button type="button" @click="clearAll()"
-                                class="text-xs text-red-400 hover:text-red-300 bg-red-400/10 hover:bg-red-400/20 px-3 py-1.5 rounded-lg transition-colors">
+                                class="text-xs font-bold text-white bg-retro-primary border-2 border-retro-text px-3 py-1.5 rounded-lg shadow-[2px_2px_0px_#202020] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_#202020] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none cursor-pointer">
                             Hapus Semua
                         </button>
                     </div>
@@ -143,55 +143,97 @@
                     @if($frame->overlay_image)
                     <div class="flex items-center gap-2 mb-3">
                         <button type="button" @click="loadExistingFrameImage()"
-                                class="flex items-center gap-2 text-xs bg-purple-600/20 hover:bg-purple-600/30 text-purple-400 border border-purple-500/30 px-3 py-1.5 rounded-lg transition-colors">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                class="flex items-center gap-2 text-xs font-black bg-white border-2 border-retro-text px-3 py-2 rounded-lg shadow-[2px_2px_0px_#202020] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_#202020] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none cursor-pointer transition-all">
+                            <svg class="w-3.5 h-3.5 stroke-[3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                             </svg>
                             Tampilkan Frame di Canvas
                         </button>
                     </div>
                     @endif
 
-                    <div class="relative rounded-xl overflow-hidden border border-gray-700 cursor-crosshair mb-4" style="touch-action: none;">
-                        <canvas x-ref="editorCanvas" class="block w-full" style="max-height: 480px;"></canvas>
-                        <div x-show="slots.length === 0 && !frameImageLoaded"
-                             class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none p-4">
-                            <svg class="w-10 h-10 text-gray-700 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
-                            </svg>
-                            <p class="text-gray-600 text-sm">Klik & drag untuk mendefinisikan slot foto</p>
+                    {{-- Canvas Editor Container --}}
+                    <div class="relative rounded-2xl overflow-hidden border-4 border-retro-text cursor-crosshair mb-4 bg-white shadow-[4px_4px_0px_#202020]" 
+                         style="touch-action: none; max-width: 100%;">
+                        <div class="relative w-full" :style="{ aspectRatio: refW + '/' + refH }">
+                            <canvas x-ref="editorCanvas"
+                                    class="absolute inset-0 w-full h-full block">
+                            </canvas>
+                            
+                            {{-- Drag placeholder --}}
+                            <div x-show="isDrawing && dragRect" 
+                                 class="absolute border-2 border-dashed border-retro-primary bg-retro-primary/10 pointer-events-none"
+                                 :style="{
+                                     left: dragRect.left,
+                                     top: dragRect.top,
+                                     width: dragRect.width,
+                                     height: dragRect.height
+                                 }">
+                            </div>
+
+                            {{-- Rendered Slot DIVs --}}
+                            <template x-for="(slot, index) in slots" :key="index">
+                                <div class="absolute border-4 border-retro-text bg-retro-secondary/20 flex items-center justify-center group pointer-events-none"
+                                     :style="{
+                                         left: (slot.x / refW) * 100 + '%',
+                                         top: (slot.y / refH) * 100 + '%',
+                                         width: (slot.w / refW) * 100 + '%',
+                                         height: (slot.h / refH) * 100 + '%',
+                                     }">
+                                    
+                                    {{-- Slot Number Label --}}
+                                    <div class="bg-retro-text text-white text-xs font-black px-2 py-1 border-2 border-retro-text rounded shadow-[2px_2px_0px_#202020] pointer-events-none"
+                                         x-text="'#' + (index + 1)">
+                                    </div>
+
+                                    {{-- Delete Button 'x' --}}
+                                    <button type="button"
+                                            @click.stop="removeSlot(index)"
+                                            class="absolute -top-3 -right-3 w-7 h-7 bg-retro-primary text-white border-2 border-retro-text rounded-full flex items-center justify-center font-black shadow-[2px_2px_0px_#202020] hover:bg-red-700 transition-all text-xs z-10 cursor-pointer pointer-events-auto">
+                                        ✕
+                                    </button>
+                                </div>
+                            </template>
                         </div>
                     </div>
 
-                    {{-- Slot list --}}
-                    <div x-show="slots.length > 0" class="space-y-2 mb-4">
-                        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Slot (<span x-text="slots.length"></span>)</p>
-                        <template x-for="(slot, index) in slots" :key="index">
-                            <div class="flex items-center justify-between bg-gray-800 rounded-xl px-3 py-2.5 group">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-6 h-6 bg-purple-600 rounded-lg flex items-center justify-center text-xs font-bold text-white" x-text="index + 1"></div>
-                                    <div class="text-xs text-gray-300 font-mono">
-                                        X:<span class="text-purple-400" x-text="Math.round(slot.x)"></span>
-                                        Y:<span class="text-purple-400" x-text="Math.round(slot.y)"></span>
-                                        W:<span class="text-blue-400" x-text="Math.round(slot.w)"></span>
-                                        H:<span class="text-blue-400" x-text="Math.round(slot.h)"></span>
-                                    </div>
-                                </div>
-                                <button type="button" @click="removeSlot(index)"
-                                        class="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-300 transition-all">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                                    </svg>
-                                </button>
-                            </div>
-                        </template>
+                    <div x-show="slots.length === 0 && !frameImageLoaded"
+                         class="bg-retro-bg border-2 border-dashed border-retro-text rounded-xl p-4 text-center mb-4">
+                        <p class="text-retro-text/60 text-xs font-bold">Upload/Tampilkan gambar frame, lalu klik & drag untuk mendefinisikan area foto</p>
                     </div>
 
-                    <div class="bg-blue-500/5 border border-blue-500/20 rounded-xl p-3 text-xs text-blue-300 space-y-1">
-                        <p class="font-semibold text-blue-400">Petunjuk:</p>
-                        <p>① Klik "Tampilkan Frame di Canvas" untuk memuat gambar frame</p>
-                        <p>② Klik & drag pada area foto (transparan) untuk mendefinisikan slot</p>
-                        <p>③ Hover slot → klik X untuk hapus</p>
+                    {{-- Slot List --}}
+                    <div x-show="slots.length > 0" class="space-y-2 mb-4">
+                        <p class="text-xs font-black text-retro-text/60 uppercase tracking-wider">Slot Terdefinisi (<span x-text="slots.length"></span>)</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <template x-for="(slot, index) in slots" :key="index">
+                                <div class="flex items-center justify-between bg-retro-bg border-2 border-retro-text rounded-xl px-3 py-2.5 group">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-6 h-6 bg-retro-text border border-retro-text rounded-lg flex items-center justify-center text-xs font-black text-white" x-text="index + 1"></div>
+                                        <div class="text-xs text-retro-text font-black font-mono">
+                                            X:<span class="text-retro-primary" x-text="Math.round(slot.x)"></span>
+                                            Y:<span class="text-retro-primary" x-text="Math.round(slot.y)"></span>
+                                            W:<span class="text-retro-secondary" x-text="Math.round(slot.w)"></span>
+                                            H:<span class="text-retro-secondary" x-text="Math.round(slot.h)"></span>
+                                        </div>
+                                    </div>
+                                    <button type="button" @click="removeSlot(index)"
+                                            class="text-retro-primary hover:text-red-700 font-black cursor-pointer transition-all">
+                                        <svg class="w-4 h-4 stroke-[3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                    {{-- Instructions --}}
+                    <div class="bg-retro-bg border-2 border-retro-text rounded-xl p-4 text-xs space-y-1 shadow-[2px_2px_0px_#202020]">
+                        <p class="font-black text-retro-primary uppercase">Petunjuk:</p>
+                        <p class="font-semibold">① Klik "Tampilkan Frame di Canvas" untuk memuat gambar frame</p>
+                        <p class="font-semibold">② Klik & drag pada area foto (transparan) untuk mendefinisikan slot</p>
+                        <p class="font-semibold">③ Hover slot list → klik X untuk hapus, atau klik ✕ di atas canvas</p>
                     </div>
                 </div>
             </div>
@@ -206,10 +248,12 @@
 <script>
 function frameEditor(existingCoords) {
     return {
+        // ── State ─────────────────────────────────────────────
         slots: [],
         isDrawing: false,
         startX: 0, startY: 0,
         currentRect: null,
+        dragRect: null,
         refW: existingCoords ? (existingCoords.ref_w || 600) : 600,
         refH: existingCoords ? (existingCoords.ref_h || 600) : 600,
         previewUrl: null,
@@ -218,26 +262,39 @@ function frameEditor(existingCoords) {
         slotCount: 0,
         existingFrameUrl: @json(isset($frame) && $frame->overlay_image ? Storage::url($frame->overlay_image) : null),
 
+        // ── Init ──────────────────────────────────────────────
         init() {
             this.$nextTick(() => {
                 this.initCanvas();
+
+                // Load existing coords if editing
                 if (existingCoords && existingCoords.slots) {
                     this.slots    = existingCoords.slots.map(s => ({...s}));
                     this.slotCount = this.slots.length;
                     this.updateInput();
                 }
+
                 this.resizeCanvas();
                 this.redraw();
+
+                // Auto-load existing frame image if present
+                if (this.existingFrameUrl) {
+                    this.loadExistingFrameImage();
+                }
             });
         },
 
+        // ── Canvas Setup ──────────────────────────────────────
         initCanvas() {
             const canvas = this.$refs.editorCanvas;
             if (!canvas) return;
+
             canvas.addEventListener('mousedown',  (e) => this.onMouseDown(e));
             canvas.addEventListener('mousemove',  (e) => this.onMouseMove(e));
             canvas.addEventListener('mouseup',    (e) => this.onMouseUp(e));
             canvas.addEventListener('mouseleave', (e) => { if (this.isDrawing) this.onMouseUp(e); });
+
+            // Touch support
             canvas.addEventListener('touchstart', (e) => { e.preventDefault(); this.onMouseDown(e.touches[0]); });
             canvas.addEventListener('touchmove',  (e) => { e.preventDefault(); this.onMouseMove(e.touches[0]); });
             canvas.addEventListener('touchend',   (e) => { e.preventDefault(); this.onMouseUp(e.changedTouches[0]); });
@@ -251,27 +308,48 @@ function frameEditor(existingCoords) {
             this.redraw();
         },
 
+        // ── Mouse / Touch Handlers ────────────────────────────
         getCanvasPos(e) {
             const canvas = this.$refs.editorCanvas;
             const rect   = canvas.getBoundingClientRect();
+            const scaleX = canvas.width  / rect.width;
+            const scaleY = canvas.height / rect.height;
             return {
-                x: (e.clientX - rect.left) * (canvas.width / rect.width),
-                y: (e.clientY - rect.top)  * (canvas.height / rect.height),
+                x: Math.max(0, Math.min(canvas.width, (e.clientX - rect.left) * scaleX)),
+                y: Math.max(0, Math.min(canvas.height, (e.clientY - rect.top) * scaleY)),
             };
         },
 
         onMouseDown(e) {
             const pos = this.getCanvasPos(e);
-            this.startX = pos.x; this.startY = pos.y;
+            this.startX    = pos.x;
+            this.startY    = pos.y;
             this.isDrawing = true;
+            this.currentRect = { x: this.startX, y: this.startY, w: 0, h: 0 };
+            this.dragRect = { left: '0%', top: '0%', width: '0%', height: '0%' };
         },
 
         onMouseMove(e) {
             if (!this.isDrawing) return;
             const pos = this.getCanvasPos(e);
+            
+            // Limit coordinates inside boundaries
+            const currentX = Math.max(0, Math.min(this.refW, pos.x));
+            const currentY = Math.max(0, Math.min(this.refH, pos.y));
+            
             this.currentRect = {
-                x: Math.min(this.startX, pos.x), y: Math.min(this.startY, pos.y),
-                w: Math.abs(pos.x - this.startX), h: Math.abs(pos.y - this.startY),
+                x: Math.min(this.startX, currentX),
+                y: Math.min(this.startY, currentY),
+                w: Math.abs(currentX - this.startX),
+                h: Math.abs(currentY - this.startY),
+            };
+            
+            // Update real-time drag placeholder in percentage
+            this.dragRect = {
+                left: (this.currentRect.x / this.refW) * 100 + '%',
+                top: (this.currentRect.y / this.refH) * 100 + '%',
+                width: (this.currentRect.w / this.refW) * 100 + '%',
+                height: (this.currentRect.h / this.refH) * 100 + '%',
             };
             this.redraw();
         },
@@ -279,59 +357,30 @@ function frameEditor(existingCoords) {
         onMouseUp(e) {
             if (!this.isDrawing) return;
             this.isDrawing = false;
+
             if (this.currentRect && this.currentRect.w > 8 && this.currentRect.h > 8) {
                 this.slots.push({ ...this.currentRect });
                 this.slotCount = this.slots.length;
                 this.updateInput();
             }
             this.currentRect = null;
+            this.dragRect = null;
             this.redraw();
         },
 
+        // ── Drawing ───────────────────────────────────────────
         redraw() {
             const canvas = this.$refs.editorCanvas;
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Background: checkerboard (shows transparency)
             this.drawCheckerboard(ctx, canvas.width, canvas.height);
 
+            // Frame image
             if (this.frameImage) {
                 ctx.drawImage(this.frameImage, 0, 0, canvas.width, canvas.height);
-            }
-
-            this.slots.forEach((slot, i) => {
-                ctx.fillStyle = 'rgba(168, 85, 247, 0.25)';
-                ctx.fillRect(slot.x, slot.y, slot.w, slot.h);
-                ctx.strokeStyle = '#a855f7';
-                ctx.lineWidth = 2;
-                ctx.strokeRect(slot.x, slot.y, slot.w, slot.h);
-
-                const markerSize = 6;
-                ctx.fillStyle = '#a855f7';
-                [[slot.x, slot.y], [slot.x+slot.w-markerSize, slot.y],
-                 [slot.x, slot.y+slot.h-markerSize], [slot.x+slot.w-markerSize, slot.y+slot.h-markerSize]]
-                    .forEach(([mx, my]) => ctx.fillRect(mx, my, markerSize, markerSize));
-
-                const label = `#${i + 1}`;
-                const fs    = Math.max(12, Math.min(20, slot.w / 6));
-                ctx.font    = `bold ${fs}px Inter, sans-serif`;
-                const tw    = ctx.measureText(label).width;
-                ctx.fillStyle = 'rgba(88, 28, 135, 0.85)';
-                ctx.beginPath();
-                ctx.roundRect(slot.x + 4, slot.y + 4, tw + 8, fs + 8, 4);
-                ctx.fill();
-                ctx.fillStyle = '#ffffff';
-                ctx.fillText(label, slot.x + 8, slot.y + 4 + fs);
-            });
-
-            if (this.currentRect) {
-                ctx.fillStyle = 'rgba(168, 85, 247, 0.15)';
-                ctx.fillRect(this.currentRect.x, this.currentRect.y, this.currentRect.w, this.currentRect.h);
-                ctx.setLineDash([6, 4]);
-                ctx.strokeStyle = '#c084fc';
-                ctx.lineWidth = 2;
-                ctx.strokeRect(this.currentRect.x, this.currentRect.y, this.currentRect.w, this.currentRect.h);
-                ctx.setLineDash([]);
             }
         },
 
@@ -339,12 +388,14 @@ function frameEditor(existingCoords) {
             const size = Math.max(8, Math.floor(Math.min(w, h) / 40));
             for (let x = 0; x < w; x += size) {
                 for (let y = 0; y < h; y += size) {
-                    ctx.fillStyle = ((Math.floor(x/size) + Math.floor(y/size)) % 2 === 0) ? '#2d3748' : '#1a202c';
+                    ctx.fillStyle = ((Math.floor(x/size) + Math.floor(y/size)) % 2 === 0)
+                        ? '#e5e7eb' : '#f9fafb';
                     ctx.fillRect(x, y, size, size);
                 }
             }
         },
 
+        // ── File Handling ─────────────────────────────────────
         onFileChange(e) {
             const file = e.target.files[0];
             if (file) this.loadImageFile(file);
@@ -391,6 +442,7 @@ function frameEditor(existingCoords) {
             img.src = this.existingFrameUrl + '?t=' + Date.now();
         },
 
+        // ── Slot Management ───────────────────────────────────
         removeSlot(index) {
             this.slots.splice(index, 1);
             this.slotCount = this.slots.length;
@@ -424,13 +476,13 @@ function frameEditor(existingCoords) {
 <style>
 .checkerboard {
     background-image:
-        linear-gradient(45deg, #374151 25%, transparent 25%),
-        linear-gradient(-45deg, #374151 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, #374151 75%),
-        linear-gradient(-45deg, transparent 75%, #374151 75%);
+        linear-gradient(45deg, #e5e7eb 25%, transparent 25%),
+        linear-gradient(-45deg, #e5e7eb 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #e5e7eb 75%),
+        linear-gradient(-45deg, transparent 75%, #e5e7eb 75%);
     background-size: 16px 16px;
     background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
-    background-color: #1f2937;
+    background-color: #f9fafb;
 }
 </style>
 @endpush

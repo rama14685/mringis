@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Mringis') — Photobox</title>
     <meta name="description" content="Mringis Photobox — Abadikan momen terbaik Anda">
+    <link rel="icon" type="image/png" href="{{ asset('img/icon/icon.png') }}">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +15,7 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen font-['Inter'] bg-gray-950 text-white overflow-x-hidden">
+<body class="min-h-screen font-['Inter'] bg-retro-bg text-retro-text overflow-x-hidden selection:bg-retro-accent1 selection:text-white">
 
 @yield('content')
 
